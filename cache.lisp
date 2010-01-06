@@ -217,4 +217,10 @@ for a db to disk."
       (dolist (pkg-spec (gethash db-name *cache-contents*))
         (when (or include-groups (consp pkg-spec))
           (funcall fn (car db-spec) pkg-spec))))))
-  
+
+(defun map-local-packages (fn &key (include-groups nil))
+  (map-cached-packages #'(lambda (db-name pkg-spec)
+			   (declare (ignore db-name))
+			   (funcall fn pkg-spec))
+		       :db-list (list *local-db*)
+		       :include-groups include-groups))
