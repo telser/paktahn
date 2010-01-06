@@ -137,3 +137,13 @@
       ;; clean up
       (cleanup-temp-files pkg-name orig-dir))
     t))
+
+(defun aur-package-p (pkg-name)
+  (not (get-package-results pkg-name :exact t :search-aur nil)))
+
+(defun list-installed-aur-packages ()
+  (let ((result nil))
+    (map-local-packages #'(lambda (pkg-data)
+			    (when (aur-package-p (car pkg-data))
+			      (push (car pkg-data) result))))
+    result))
