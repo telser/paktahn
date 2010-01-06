@@ -76,7 +76,7 @@
     (with-term-colors/id :pkg-description
       (format t "~%    ~A~%" description))))
 
-(defun get-package-results (query &key (quiet t) exact (stream *standard-output*) query-for-providers)
+(defun get-package-results (query &key (quiet t) exact (stream *standard-output*) query-for-providers (search-aur t))
   (declare (string query))
   (let* ((*print-pretty* nil)
          (i 0)
@@ -116,7 +116,8 @@
                                           :stream stream
                                           :out-of-date-p (equal out-of-date "1")))))))
     (map-cached-packages db-pkg-and-grp-fn)
-    (map-aur-packages aur-pkg-fn query)
+    (when search-aur 
+      (map-aur-packages aur-pkg-fn query))
     packages))
 
 
