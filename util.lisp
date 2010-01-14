@@ -245,7 +245,16 @@ BODY may call RETRY at any time to restart its execution."
                                        t))))
           (values (sb-ext:process-exit-code result)
                   (sb-ext:process-output result)))
-  #+ccl(warn "not implemented yet.")
+  #+ccl(let ((result (ccl:run-program program (ensure-list args)
+				      :wait t :input t
+				      :output (if capture-output-p
+						  :stream
+						  t))))
+	 (values
+	   (multiple-value-bind (status exit-code) (ccl:external-process-status result)
+	     (declare (ignore status))
+	     exit-code)
+	   (ccl:external-process-output-stream result)))
   #+ecl(ext:run-program (find-in-path program)
 		       (ensure-list args)
 		       :input t
