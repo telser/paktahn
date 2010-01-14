@@ -337,6 +337,32 @@ Returns T upon successful installation, NIL otherwise."
                   (format s "Skip removal of package ~S and continue" pkg-name))
         (values nil 'skipped)))))
 
+(defun first-run-p ()
+  (not (probe-file (config-file "config.lisp"))))
+
+(defun first-run-agent () ;; TODO: hideous, needs macros. last line won't work unless evaluated at run-time (duh).
+  (let ((info-string (concatenate 'string "This is the ~a background color scheme. "
+				  "If you prefer it (or it is all you can see), please type ~d."))
+	(config-args nil))
+    (let ((*color-scheme* *color-scheme-darkbg*))
+      (info (format nil info-string "dark" 1)))
+    (let ((*color-scheme* *color-scheme-lightbg*))
+      (info (format nil info-string "light" "2"))))
+  (let ((result (getline ;; TODO: hideous, ought to abstract the input loop from search-and-install-packages
+		 (with-term-colors/id :pkg-outofdate
+		   (format nil "Please input 1 or 2 to select your preferred color scheme => ")))))
+    (if (string= result "1")
+	(push (symbol-name '*color-scheme-darkbg*) config-args)
+	(push (symbol-name '*color-scheme-lightbg*) config-args))
+    (push :color-scheme config-args))
+  `(write-user-config ,@config-args))
+
+(defun write-user-config (&key color-scheme)
+  (with-open-file (out (config-file "config.lisp") :direction :output)
+    (write-line "(in-package :pak)")
+    (when color-scheme ;; TODO: would prefer to have a macro that loops across all kw-args doing this.
+      (write-line (concatenate 'string "(setf *color-scheme* " color-scheme " )")))))
+
 (defun display-help ()
   (format t "~
 Usage:
@@ -375,6 +401,8 @@ Usage:
     (setf *print-pretty* nil)
     (enable-quit-on-sigint)
     (check-for-customizepkg)
+    (when (first-run-p)
+      (first-run-agent))
     (let ((argv (cdr (getargv))))
       (restart-case
           (main argv)
