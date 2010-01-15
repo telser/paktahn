@@ -251,9 +251,7 @@ BODY may call RETRY at any time to restart its execution."
 						  :stream
 						  t))))
 	 (values
-	   (multiple-value-bind (status exit-code) (ccl:external-process-status result)
-	     (declare (ignore status))
-	     exit-code)
+	   (nth-value 1 (ccl:external-process-status result))
 	   (ccl:external-process-output-stream result)))
   #+ecl(ext:run-program (find-in-path program)
 		       (ensure-list args)
