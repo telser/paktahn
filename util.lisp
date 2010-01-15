@@ -250,9 +250,8 @@ BODY may call RETRY at any time to restart its execution."
 				      :output (if capture-output-p
 						  :stream
 						  t))))
-	 (values
-	   (nth-value 1 (ccl:external-process-status result))
-	   (ccl:external-process-output-stream result)))
+	 (values (nth-value 1 (ccl:external-process-status result))
+		 (ccl:external-process-output-stream result)))
   #+ecl(ext:run-program (find-in-path program)
 		       (ensure-list args)
 		       :input t
