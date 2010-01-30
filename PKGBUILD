@@ -3,9 +3,9 @@
 # Maintainer: Leslie P. Polzer <polzer@gnu.org>
 
 pkgname=paktahn
-pkgver=0.8.2
-libver=0.8
-pkgrel=2
+pkgver=0.8.3
+libver=0.8.3
+pkgrel=1
 pkgdesc="The kick-ass package manager for Arch Linux!"
 arch=('i686' 'x86_64')
 depends=('pacman' 'readline' 'sudo' 'svn')
@@ -31,7 +31,6 @@ build() {
        --eval "(require :asdf)" \
        --eval "(setf asdf:*central-registry*
                     '(\"$srcdir/\" \"$srcdir/clbuild.paktahn/systems/\"))" \
-       --eval "(asdf:oos 'asdf:load-op 'split-sequence)" \
        --eval "(asdf:oos 'asdf:load-op 'paktahn)" \
        --eval "(pak::build-core :forkp nil)"
 
@@ -49,7 +48,8 @@ build() {
   cd $pkgdir/usr/bin
   ln -s paktahn pak
 }
-md5sums=('f7d1a6d9a1a0107f09158216f1f9ea50'
-	 'bf9db675985ff06b7a868e52024032d9')
-sha1sums=('422e05d9f2dee7bd686377779b9655d828278518'
-	  'e0c49e115e3c6a95cbfbce0bea4524f796b67726')
+
+md5sums=('dcbcbee6d532ebb10742e883a3d1ad2e'
+         'ad1f45a8fee763e15733388cc85de45a')
+sha1sums=('a89068dadbf18871db721ac32acbcb8c897291f6'
+          'e40c5f513a23c57fdcf147fc4766c76192e57c4e')
