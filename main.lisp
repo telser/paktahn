@@ -388,7 +388,8 @@ Usage:
     (setf *print-pretty* nil)
     (enable-quit-on-sigint)
     (check-for-customizepkg)
-    (let ((argv (cdr (getargv))))
+    (let ((argv #-ccl(cdr (getargv))
+		#+ccl(cdddr (getargv))))
       (restart-case
           (main argv)
         (quit ()
