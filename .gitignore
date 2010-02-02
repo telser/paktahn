@@ -2,6 +2,8 @@
 *.fas
 *.o
 *.a
+*.lx32fsl
+*.lx64fsl
 Attic
 pacman.git
 *.swp
