@@ -160,12 +160,6 @@ BODY may call RETRY at any time to restart its execution."
 
 
 ;;;; posix and friends
-(defun getargv ()
-  #+sbcl sb-ext:*posix-argv*
-  #+ecl(ext:command-args)
-  #+ccl ccl:*command-line-argument-list*
-  #-(or sbcl ecl ccl)(error "no argv"))
-
 (defun getpid ()
   #+sbcl(sb-posix:getpid)
   #+ecl(ext:getpid)

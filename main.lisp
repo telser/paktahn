@@ -407,7 +407,7 @@ Usage:
     (setf *print-pretty* nil)
     (enable-quit-on-sigint)
     (check-for-customizepkg)
-    (let ((argv (cdr (getargv))))
+    (let ((argv (cli-options)))
       (restart-case
           (main argv)
         (quit ()
