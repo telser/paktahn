@@ -244,4 +244,12 @@ objects."
                         :key (compose #'first #'parse-dep))
             (push (cons db-name name) providers))))
       :include-groups nil)
+      (loop for (pkg-name local-version . rest) in (installed-aur-packages) do
+        (with-tmp-dir ((tempdir) (current-directory))
+          (get-pkgbuild-from-aur pkg-name)
+          (with-tmp-dir ((merge-pathnames (ensure-trailing-slash pkg-name))
+                   (current-directory))
+            (when (string= provides-name (get-pkgbuild-provides))
+              (push (cons "aur" pkg-name) providers)))))
+
     providers))

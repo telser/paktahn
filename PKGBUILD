@@ -51,3 +51,19 @@ md5sums=('aa71c5e639e86bee3afe7d4e27653649'
          'fcdb995fceced619c77124ffdbc68d15')
 sha1sums=('1fb3e04732d00c68e7b8aa7ae0a18e9f98359e5f'
           'bea925c7b085fc352e41ef262ada95de9c0b3b71')
+md5sums=('aa71c5e639e86bee3afe7d4e27653649'
+         '7de65553c5ab8b987d2bde63bdf65aa6')
+sha1sums=('1fb3e04732d00c68e7b8aa7ae0a18e9f98359e5f'
+          '49d8b48ddae661d64031bbc40652e74ab8692233')
+md5sums=('aa71c5e639e86bee3afe7d4e27653649'
+         '1bd1867e8435d415f70b18c15bc04e32')
+sha1sums=('1fb3e04732d00c68e7b8aa7ae0a18e9f98359e5f'
+          '1d28b4275180befe26246dff416abd389633256f')
+md5sums=('aa71c5e639e86bee3afe7d4e27653649'
+         '1bd1867e8435d415f70b18c15bc04e32')
+sha1sums=('1fb3e04732d00c68e7b8aa7ae0a18e9f98359e5f'
+          '1d28b4275180befe26246dff416abd389633256f')
+md5sums=('aa71c5e639e86bee3afe7d4e27653649'
+         '38d8e0cb5117f0df4bf79dfc63a65062')
+sha1sums=('1fb3e04732d00c68e7b8aa7ae0a18e9f98359e5f'
+          '695f1aca8efe35f1b5981ca24c037999be18127b')
