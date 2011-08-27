@@ -130,12 +130,10 @@
     (flet ((field (name)
              (cdr (assoc name provides-data :test #'equalp))))
          ;; TODO: use another separator in case someone used spaces
-         ;; in the dep specs themselves.
+         ;; in the provides specs themselves.
       (let ((provides (mapcar #'parse-provides
                           (split-sequence #\Space (field "provides")
                                           :remove-empty-subseqs t))))
-        ;(format t "deps: ~A~%" deps)
-        ;(format t "makedeps: ~A~%" makedeps)
         ;; TODO: for now we just ignore version information
         (loop for pkg in (append provides) do
                 (unless (find-package-by-name (first pkg))
@@ -222,3 +220,13 @@
       (delete-directory-and-files pkgdir))
     (when (probe-file tarball)
       (delete-file tarball))))
+
+(defun get-pkg-provides (pkg-name pkg-version)
+  (let ((last-line nil)
+       (desc-path (format nil "/var/lib/pacman/local/~a-~a/desc"
+                           pkg-name pkg-version)))
+    (with-open-file (in desc-path)
+        (loop for line = (read-line in nil) while line do
+              (if (string= last-line "%PROVIDES%")
+                  (return line)
+                  (setf last-line line))))))
