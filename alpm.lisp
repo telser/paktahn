@@ -175,7 +175,7 @@ objects."
 (defun remove-command (args)
   (etypecase args
     (string (run-pacman `("-R" ,args) :force t))
-    (list (un-pacman args :force t)))
+    (list (run-pacman args :force t)))
   (reset-cache))
 
 (defun sync-command (&optional (args '("-Sy")))
