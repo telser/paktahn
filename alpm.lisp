@@ -162,17 +162,20 @@ objects."
          (retry)))
      ,@body))
 
-(defun run-pacman (args &key capture-output-p force)
-  (with-pacman-lock
-    (run-program "sudo" (append (list *pacman-binary*)
-                                (unless force (list "--needed"))
-                                args)
-                 :capture-output-p capture-output-p)))
+
+(defun run-pacman (args &key (sudo-p t) capture-output-p force)
+  (let ((args (append args (unless force (list "--needed")))))
+    (with-pacman-lock
+        (if sudo-p
+            (run-program "sudo" (append (list *pacman-binary*) args)
+                         :capture-output-p capture-output-p)
+            (run-program *pacman-binary* args
+                         :capture-output-p capture-output-p)))))
 
 (defun remove-command (args)
   (etypecase args
     (string (run-pacman `("-R" ,args) :force t))
-    (list (run-pacman args :force t)))
+    (list (un-pacman args :force t)))
   (reset-cache))
 
 (defun sync-command (&optional (args '("-Sy")))

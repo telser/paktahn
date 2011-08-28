@@ -418,7 +418,7 @@ Usage:
      (remove-command argv))
     ((and (plusp argc) (member (subseq (first argv) 0 2)
                                '("-D" "-Q") :test #'equal))
-     (run-pacman argv :force t))
+     (run-pacman argv :sudo-p nil :force t))
     ((and (= argc 1) (equal (first argv) "-Sy"))
      (sync-command))
     ((and (= argc 1) (equal (first argv) "-Su"))
