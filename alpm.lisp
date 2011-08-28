@@ -233,7 +233,6 @@ objects."
 (defcfun "alpm_pkg_get_provides" :pointer (pkg :pointer))
 
 (defun find-providing-packages (provides-name)
-  ;; TODO: aur support
   (maybe-refresh-cache)
   (let (providers)
     (map-cached-packages
