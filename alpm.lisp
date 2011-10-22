@@ -255,7 +255,6 @@ objects."
             (push (cons db-name name) providers))))
       :include-groups nil)
       (loop for (pkg-name local-version . rest) in (installed-aur-packages) do
-<<<<<<< HEAD
         (with-tmp-dir ((tempdir) (current-directory))
           (get-pkgbuild-from-aur pkg-name)
           (with-tmp-dir ((merge-pathnames (ensure-trailing-slash pkg-name))
